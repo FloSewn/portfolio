@@ -18,5 +18,13 @@ export const projects: Project[] = [
     tags: ["Python", "Statsmodels", "Seaborn"],
     notebookPath: "/portfolio/notebooks/time_series.html",
     githubUrl: "https://github.com/dein-username/portfolio",
+  },
+  {
+  id: "two-tank-model",
+  title: "Zweitank-System Modellierung & Regelung",
+  category: "Process Engineering / Simulation",
+  description: "Datengestützte Modellierung und Simulation eines dynamischen Zweitank-Systems.",
+  tags: ["Python", "NumPy", "SciPy", "Matplotlib"],
+  notebookPath: "/portfolio/notebooks/TwoTankModel.html",
   }
 ];
