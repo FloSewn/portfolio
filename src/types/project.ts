@@ -4,6 +4,6 @@ export interface Project {
   category: string;
   description: string;
   tags: string[];
-  notebookPath: string;
+  notebookPath?: string;
   githubUrl?: string;
 }

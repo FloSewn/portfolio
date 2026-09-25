@@ -1,24 +1,17 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { projects } from '../data/projects';
+import { MnistVaeDemo } from '../components/MnistVaeDemo'; // <-- Import your component
 
 export const Article: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const project = projects.find((p) => p.id === id);
 
-  // Scroll to top when loading a new article
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
 
-  if (!project) {
-    return (
-      <div className="max-w-4xl mx-auto px-6 py-20 text-center">
-        <h2 className="text-3xl font-bold text-slate-100 mb-4">Artikel nicht gefunden</h2>
-        <Link to="/" className="text-blue-600 hover:underline">Zurück zur Startseite</Link>
-      </div>
-    );
-  }
+  if (!project) return <div>Artikel nicht gefunden</div>;
 
   return (
     <article className="max-w-5xl mx-auto px-6 py-12">
@@ -36,23 +29,25 @@ export const Article: React.FC = () => {
         <p className="text-lg text-slate-400 leading-relaxed mb-6">
           {project.description}
         </p>
-        <div className="flex flex-wrap gap-2">
-          {project.tags.map((tag, idx) => (
-            <span key={idx} className="font-mono bg-slate-900 text-slate-300 text-xs px-3 py-1.5 rounded-md border border-slate-800">
-              {tag}
-            </span>
-          ))}
-        </div>
       </header>
 
-      {/* Embedded Colab Notebook */}
-      <section className="bg-white rounded-xl shadow-lg overflow-hidden border border-slate-800 h-[800px]">
-        <iframe 
-          src={project.notebookPath} 
-          title={project.title}
-          className="w-full h-full border-0"
-        />
-      </section>
+      {/* Conditionally render the React Component if it is the MNIST VAE */}
+      {project.id === "mnist-vae" && (
+        <section className="mb-12">
+          <MnistVaeDemo />
+        </section>
+      )}
+
+      {/* Conditionally render the Colab HTML iframe if a path exists */}
+      {project.notebookPath && (
+        <section className="bg-white rounded-xl shadow-lg overflow-hidden border border-slate-800 h-[800px]">
+          <iframe 
+            src={project.notebookPath} 
+            title={project.title}
+            className="w-full h-full border-0"
+          />
+        </section>
+      )}
     </article>
   );
 };

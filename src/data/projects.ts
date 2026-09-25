@@ -26,5 +26,13 @@ export const projects: Project[] = [
   description: "Datengestützte Modellierung und Simulation eines dynamischen Zweitank-Systems.",
   tags: ["Python", "NumPy", "SciPy", "Matplotlib"],
   notebookPath: "/portfolio/notebooks/TwoTankModel.html",
+  },
+  {
+    id: "mnist-vae",
+    title: "Latent Space Exploration (MNIST)",
+    category: "Generative AI & WebAssembly",
+    description: "An interactive Variational Autoencoder running entirely client-side via ONNX Runtime Web. Draw digits and explore the continuous latent manifold.",
+    tags: ["PyTorch", "ONNX", "React", "WebAssembly"],
+    // No notebookPath needed for this purely interactive React project
   }
 ];
