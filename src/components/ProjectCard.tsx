@@ -1,12 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import type { Project } from '../types/project';
 
 interface ProjectCardProps {
   project: Project;
-  onOpenNotebook: (project: Project) => void;
 }
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onOpenNotebook }) => {
+export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-slate-700 hover:shadow-md transition-all">
       <div>
@@ -25,12 +25,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onOpenNoteboo
         </div>
       </div>
 
-      <button
-        onClick={() => onOpenNotebook(project)}
-        className="w-full bg-slate-950 hover:bg-blue-600 hover:text-white text-slate-100 font-medium py-2.5 rounded-lg transition-all text-sm border border-slate-800 flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+      <Link
+        to={`/article/${project.id}`}
+        className="w-full bg-slate-950 hover:bg-blue-600 hover:text-white text-slate-100 font-medium py-2.5 rounded-lg transition-all text-sm border border-slate-800 flex items-center justify-center gap-2 shadow-sm text-center"
       >
-        <span>📓 Notebook öffnen</span>
-      </button>
+        <span>📓 Artikel & Notebook lesen</span>
+      </Link>
     </div>
   );
 };
