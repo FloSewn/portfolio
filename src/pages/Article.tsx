@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { projects } from '../data/projects';
+import { Link, useParams } from 'react-router-dom';
 import { MnistVaeDemo } from '../components/MnistVaeDemo'; // <-- Import your component
+import { projects } from '../data/projects';
 
 export const Article: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -41,12 +41,21 @@ export const Article: React.FC = () => {
 
       {/* Conditionally render the Colab HTML iframe if a path exists */}
       {project.notebookPath && (
-        <section className="h-[800px] overflow-hidden rounded-xl border border-slate-800 bg-white shadow-lg">
-          <iframe
-            src={project.notebookPath}
-            title={project.title}
-            className="h-full w-full border-0"
-          />
+        <section className="overflow-hidden rounded-xl border border-slate-800 bg-white shadow-lg">
+          {/* Wrapper für Mobile Scaling oder feste Desktop-Höhe */}
+          <div className="h-200 w-full md:w-full">
+            <iframe
+              src={project.notebookPath}
+              title={project.title}
+              className="h-full w-full origin-top-left border-0 md:scale-100"
+              style={
+                {
+                  // Optionaler Trick: Auf kleineren Bildschirmen das Iframe etwas breiter rechnen und runterskalieren,
+                  // damit der Inhalt kompakter wirkt (oder einfach so lassen)
+                }
+              }
+            />
+          </div>
         </section>
       )}
     </article>
