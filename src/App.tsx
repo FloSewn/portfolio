@@ -8,7 +8,7 @@ import { Article } from './pages/Article';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col">
+    <div className="flex min-h-screen flex-col bg-slate-950 font-sans text-slate-100">
       <Navbar />
       <div className="flex-grow">
         <Routes>

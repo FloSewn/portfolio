@@ -8,17 +8,20 @@ interface ProjectCardProps {
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 flex flex-col justify-between hover:border-slate-700 hover:shadow-md transition-all">
+    <div className="flex flex-col justify-between rounded-xl border border-slate-800 bg-slate-900 p-6 transition-all hover:border-slate-700 hover:shadow-md">
       <div>
-        <span className="font-mono text-xs font-bold text-blue-600 uppercase tracking-wider">
+        <span className="font-mono text-xs font-bold tracking-wider text-blue-600 uppercase">
           {project.category}
         </span>
-        <h3 className="text-xl font-bold text-slate-100 mt-2 mb-2">{project.title}</h3>
-        <p className="text-slate-400 text-sm mb-4 leading-relaxed">{project.description}</p>
-        
-        <div className="flex flex-wrap gap-2 mb-6">
+        <h3 className="mt-2 mb-2 text-xl font-bold text-slate-100">{project.title}</h3>
+        <p className="mb-4 text-sm leading-relaxed text-slate-400">{project.description}</p>
+
+        <div className="mb-6 flex flex-wrap gap-2">
           {project.tags.map((tag, idx) => (
-            <span key={idx} className="font-mono bg-slate-950 text-slate-300 text-xs px-2.5 py-1 rounded border border-slate-800">
+            <span
+              key={idx}
+              className="rounded border border-slate-800 bg-slate-950 px-2.5 py-1 font-mono text-xs text-slate-300"
+            >
               {tag}
             </span>
           ))}
@@ -27,7 +30,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
       <Link
         to={`/article/${project.id}`}
-        className="w-full bg-slate-950 hover:bg-blue-600 hover:text-white text-slate-100 font-medium py-2.5 rounded-lg transition-all text-sm border border-slate-800 flex items-center justify-center gap-2 shadow-sm text-center"
+        className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-800 bg-slate-950 py-2.5 text-center text-sm font-medium text-slate-100 shadow-sm transition-all hover:bg-blue-600 hover:text-white"
       >
         <span>📓 Artikel & Notebook lesen</span>
       </Link>

@@ -14,25 +14,26 @@ export const Article: React.FC = () => {
   if (!project) return <div>Artikel nicht gefunden</div>;
 
   return (
-    <article className="max-w-5xl mx-auto px-6 py-12">
-      <Link to="/" className="inline-flex items-center text-blue-500 hover:text-blue-400 mb-8 font-medium">
+    <article className="mx-auto max-w-5xl px-6 py-12">
+      <Link
+        to="/"
+        className="mb-8 inline-flex items-center font-medium text-blue-500 hover:text-blue-400"
+      >
         ← Zurück zur Übersicht
       </Link>
-      
+
       <header className="mb-10">
-        <span className="font-mono text-sm font-bold text-blue-600 uppercase tracking-wider">
+        <span className="font-mono text-sm font-bold tracking-wider text-blue-600 uppercase">
           {project.category}
         </span>
-        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-100 mt-3 mb-6 leading-tight">
+        <h1 className="mt-3 mb-6 text-4xl leading-tight font-extrabold text-slate-100 md:text-5xl">
           {project.title}
         </h1>
-        <p className="text-lg text-slate-400 leading-relaxed mb-6">
-          {project.description}
-        </p>
+        <p className="mb-6 text-lg leading-relaxed text-slate-400">{project.description}</p>
       </header>
 
       {/* Conditionally render the React Component if it is the MNIST VAE */}
-      {project.id === "mnist-vae" && (
+      {project.id === 'mnist-vae' && (
         <section className="mb-12">
           <MnistVaeDemo />
         </section>
@@ -40,11 +41,11 @@ export const Article: React.FC = () => {
 
       {/* Conditionally render the Colab HTML iframe if a path exists */}
       {project.notebookPath && (
-        <section className="bg-white rounded-xl shadow-lg overflow-hidden border border-slate-800 h-[800px]">
-          <iframe 
-            src={project.notebookPath} 
+        <section className="h-[800px] overflow-hidden rounded-xl border border-slate-800 bg-white shadow-lg">
+          <iframe
+            src={project.notebookPath}
             title={project.title}
-            className="w-full h-full border-0"
+            className="h-full w-full border-0"
           />
         </section>
       )}

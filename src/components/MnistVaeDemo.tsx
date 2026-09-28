@@ -5,7 +5,7 @@ export const MnistVaeDemo: React.FC = () => {
   const { isReady, encode, decode } = useVAE();
   const drawCanvasRef = useRef<HTMLCanvasElement>(null);
   const outCanvasRef = useRef<HTMLCanvasElement>(null);
-  
+
   const [isDrawing, setIsDrawing] = useState(false);
   const [z, setZ] = useState<[number, number]>([0, 0]);
 
@@ -29,7 +29,7 @@ export const MnistVaeDemo: React.FC = () => {
     setIsDrawing(false);
     const ctx = drawCanvasRef.current?.getContext('2d');
     if (ctx) ctx.beginPath();
-    
+
     // Process drawing for the Encoder
     const pixels = extract28x28Pixels(drawCanvasRef.current!);
     const newZ = await encode(pixels);
@@ -40,7 +40,7 @@ export const MnistVaeDemo: React.FC = () => {
     if (!isDrawing || !drawCanvasRef.current) return;
     const ctx = drawCanvasRef.current.getContext('2d');
     if (!ctx) return;
-    
+
     const rect = drawCanvasRef.current.getBoundingClientRect();
     ctx.lineWidth = 24;
     ctx.lineCap = 'round';
@@ -64,18 +64,22 @@ export const MnistVaeDemo: React.FC = () => {
   useEffect(() => clearCanvas(), []);
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-xl p-8 shadow-lg max-w-4xl mx-auto my-12 text-slate-100">
+    <div className="mx-auto my-12 max-w-4xl rounded-xl border border-slate-800 bg-slate-900 p-8 text-slate-100 shadow-lg">
       <div className="mb-8 text-center">
-        <h2 className="text-3xl font-bold mb-2">Interactive Latent Space (MNIST)</h2>
+        <h2 className="mb-2 text-3xl font-bold">Interactive Latent Space (MNIST)</h2>
         <p className="text-slate-400">
-          {isReady ? "Draw a digit on the left to encode it, or use the sliders to explore the VAE's 'dreams'." : "Loading ONNX WebAssembly..."}
+          {isReady
+            ? "Draw a digit on the left to encode it, or use the sliders to explore the VAE's 'dreams'."
+            : 'Loading ONNX WebAssembly...'}
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
         {/* Encoder Panel */}
         <div className="flex flex-col items-center">
-          <h3 className="font-mono text-sm font-bold text-blue-600 tracking-wider mb-4">ENCODER INPUT</h3>
+          <h3 className="mb-4 font-mono text-sm font-bold tracking-wider text-blue-600">
+            ENCODER INPUT
+          </h3>
           <canvas
             ref={drawCanvasRef}
             width={280}
@@ -84,36 +88,57 @@ export const MnistVaeDemo: React.FC = () => {
             onMouseUp={stopDrawing}
             onMouseOut={stopDrawing}
             onMouseMove={draw}
-            className="border-2 border-slate-700 rounded-lg cursor-crosshair shadow-inner"
+            className="cursor-crosshair rounded-lg border-2 border-slate-700 shadow-inner"
           />
-          <button onClick={clearCanvas} className="mt-4 px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-md text-sm transition-colors">
+          <button
+            onClick={clearCanvas}
+            className="mt-4 rounded-md bg-slate-800 px-4 py-2 text-sm transition-colors hover:bg-slate-700"
+          >
             Clear Canvas
           </button>
         </div>
 
         {/* Decoder Panel */}
         <div className="flex flex-col items-center">
-          <h3 className="font-mono text-sm font-bold text-teal-500 tracking-wider mb-4">DECODER OUTPUT</h3>
+          <h3 className="mb-4 font-mono text-sm font-bold tracking-wider text-teal-500">
+            DECODER OUTPUT
+          </h3>
           <canvas
             ref={outCanvasRef}
             width={280}
             height={280}
-            className="border-2 border-slate-700 rounded-lg shadow-inner bg-black"
+            className="rounded-lg border-2 border-slate-700 bg-black shadow-inner"
           />
-          
+
           {/* Latent Sliders */}
-          <div className="w-full mt-6 space-y-4 px-4">
+          <div className="mt-6 w-full space-y-4 px-4">
             <div>
-              <label className="flex justify-between text-xs font-mono text-slate-400 mb-1">
+              <label className="mb-1 flex justify-between font-mono text-xs text-slate-400">
                 <span>Z1 (Latent X)</span> <span>{z[0].toFixed(2)}</span>
               </label>
-              <input type="range" min="-3" max="3" step="0.1" value={z[0]} onChange={(e) => setZ([parseFloat(e.target.value), z[1]])} className="w-full accent-blue-600" />
+              <input
+                type="range"
+                min="-3"
+                max="3"
+                step="0.1"
+                value={z[0]}
+                onChange={(e) => setZ([parseFloat(e.target.value), z[1]])}
+                className="w-full accent-blue-600"
+              />
             </div>
             <div>
-              <label className="flex justify-between text-xs font-mono text-slate-400 mb-1">
+              <label className="mb-1 flex justify-between font-mono text-xs text-slate-400">
                 <span>Z2 (Latent Y)</span> <span>{z[1].toFixed(2)}</span>
               </label>
-              <input type="range" min="-3" max="3" step="0.1" value={z[1]} onChange={(e) => setZ([z[0], parseFloat(e.target.value)])} className="w-full accent-teal-500" />
+              <input
+                type="range"
+                min="-3"
+                max="3"
+                step="0.1"
+                value={z[1]}
+                onChange={(e) => setZ([z[0], parseFloat(e.target.value)])}
+                className="w-full accent-teal-500"
+              />
             </div>
           </div>
         </div>
@@ -129,7 +154,7 @@ function extract28x28Pixels(sourceCanvas: HTMLCanvasElement): Float32Array {
   hiddenCanvas.height = 28;
   const ctx = hiddenCanvas.getContext('2d')!;
   ctx.drawImage(sourceCanvas, 0, 0, 28, 28);
-  
+
   const imgData = ctx.getImageData(0, 0, 28, 28).data;
   const pixels = new Float32Array(784);
   for (let i = 0; i < 784; i++) {
@@ -144,7 +169,7 @@ function renderToCanvas(pixels: Float32Array, targetCanvas: HTMLCanvasElement) {
   hiddenCanvas.height = 28;
   const ctx = hiddenCanvas.getContext('2d')!;
   const imgData = ctx.createImageData(28, 28);
-  
+
   for (let i = 0; i < 784; i++) {
     const val = pixels[i] * 255;
     imgData.data[i * 4] = val;
@@ -153,9 +178,9 @@ function renderToCanvas(pixels: Float32Array, targetCanvas: HTMLCanvasElement) {
     imgData.data[i * 4 + 3] = 255;
   }
   ctx.putImageData(imgData, 0, 0);
-  
+
   // Scale 28x28 up to 280x280 for display
   const targetCtx = targetCanvas.getContext('2d')!;
-  targetCtx.imageSmoothingEnabled = false; 
+  targetCtx.imageSmoothingEnabled = false;
   targetCtx.drawImage(hiddenCanvas, 0, 0, 280, 280);
 }
