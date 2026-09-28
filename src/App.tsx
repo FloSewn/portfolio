@@ -1,10 +1,9 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
-import { Home } from './pages/Home';
 import { About } from './pages/About';
-import { Projects } from './pages/Projects';
 import { Article } from './pages/Article';
+import { Home } from './pages/Home';
+import { Projects } from './pages/Projects';
 
 export default function App() {
   return (
