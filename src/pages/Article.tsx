@@ -42,18 +42,12 @@ export const Article: React.FC = () => {
       {/* Conditionally render the Colab HTML iframe if a path exists */}
       {project.notebookPath && (
         <section className="overflow-hidden rounded-xl border border-slate-800 bg-white shadow-lg">
-          {/* Wrapper für Mobile Scaling oder feste Desktop-Höhe */}
-          <div className="h-200 w-full md:w-full">
+          {/* overflow-x-auto erlaubt horizontales Wischen auf Smartphones, wenn etwas zu breit ist */}
+          <div className="h-[800px] w-full overflow-x-auto [-webkit-overflow-scrolling:touch]">
             <iframe
               src={project.notebookPath}
               title={project.title}
-              className="h-full w-full origin-top-left border-0 md:scale-100"
-              style={
-                {
-                  // Optionaler Trick: Auf kleineren Bildschirmen das Iframe etwas breiter rechnen und runterskalieren,
-                  // damit der Inhalt kompakter wirkt (oder einfach so lassen)
-                }
-              }
+              className="h-full w-full min-w-[768px] border-0"
             />
           </div>
         </section>
